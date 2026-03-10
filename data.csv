@@ -1,0 +1,6 @@
+order_id,warehouse,product,order_date,ship_date
+1,W1,Laptop,2024-01-01,2024-01-04
+2,W2,Phone,2024-01-02,2024-01-03
+3,W1,Tablet,2024-01-03,2024-01-08
+4,W3,Laptop,2024-01-04,2024-01-05
+5,W2,Tablet,2024-01-05,2024-01-10
