@@ -2,7 +2,6 @@ import pandas as pd
 import random
 from datetime import datetime, timedelta
 
-# number of rows
 num_rows = 1000
 
 warehouses = ["W1","W2","W3","W4","W5","W6","W7","W8"]

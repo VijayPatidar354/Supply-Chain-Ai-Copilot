@@ -1,8 +1,9 @@
 import streamlit as st
 import pandas as pd
 import plotly.express as px
+import plotly.graph_objects as go
 
-from data_processor import load_data, generate_summary
+from data_processor import load_data, generate_summary, calculate_health_score
 from ai_engine import ask_ai
 from utils.prompt_template import build_prompt
 
@@ -37,8 +38,29 @@ if uploaded_file:
     ]
 
     if filtered_df.empty:
-        st.warning("⚠️ No data available. Please select at least one warehouse and product from the filters.")
+        st.warning("⚠️ No data available. Please select at least one warehouse and product.")
         st.stop()
+
+    # ---------------- Health Score ----------------
+    health_score = calculate_health_score(filtered_df)
+
+    fig = go.Figure(go.Indicator(
+        mode="gauge+number",
+        value=health_score,
+        title={'text': "Supply Chain Health Score"},
+        gauge={
+            'axis': {'range': [0, 100]},
+            'bar': {'color': "darkblue"},
+            'steps': [
+                {'range': [0, 40], 'color': "red"},
+                {'range': [40, 70], 'color': "orange"},
+                {'range': [70, 90], 'color': "yellow"},
+                {'range': [90, 100], 'color': "green"}
+            ]
+        }
+    ))
+
+    st.plotly_chart(fig, use_container_width=True)
 
     # ---------------- KPI Metrics ----------------
     total_orders = len(filtered_df)
@@ -56,11 +78,8 @@ if uploaded_file:
 
     st.divider()
 
-    # ---------------- Charts ----------------
-
     col1, col2 = st.columns(2)
 
-    # Chart 1: Delay by Warehouse
     warehouse_delay = filtered_df.groupby("warehouse")["delay"].mean().reset_index()
 
     fig1 = px.bar(
@@ -73,7 +92,6 @@ if uploaded_file:
 
     col1.plotly_chart(fig1, use_container_width=True)
 
-    # Chart 2: Delay by Product
     product_delay = filtered_df.groupby("product")["delay"].mean().reset_index()
 
     fig2 = px.bar(
@@ -86,7 +104,6 @@ if uploaded_file:
 
     col2.plotly_chart(fig2, use_container_width=True)
 
-    # Chart 3: Delay Distribution
     fig3 = px.histogram(
         filtered_df,
         x="delay",
@@ -98,14 +115,14 @@ if uploaded_file:
 
     st.divider()
 
-    # ---------------- Dataset Table ----------------
+    
     st.subheader("📋 Dataset Preview")
 
     st.dataframe(filtered_df, use_container_width=True)
 
     st.divider()
 
-    # ---------------- AI Copilot ----------------
+    
     st.subheader("🤖 AI Supply Chain Copilot")
 
     summary = generate_summary(filtered_df)

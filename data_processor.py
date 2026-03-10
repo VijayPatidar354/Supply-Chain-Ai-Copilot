@@ -1,5 +1,6 @@
 import pandas as pd
 
+
 def load_data(file):
 
     df = pd.read_csv(file)
@@ -15,11 +16,9 @@ def load_data(file):
 def generate_summary(df):
 
     avg_delay_warehouse = df.groupby("warehouse")["delay"].mean()
-
     avg_delay_product = df.groupby("product")["delay"].mean()
 
     fastest_product = avg_delay_product.idxmin()
-
     slowest_product = avg_delay_product.idxmax()
 
     worst_warehouse = avg_delay_warehouse.idxmax()
@@ -47,3 +46,12 @@ Orders delayed more than 3 days:
 """
 
     return summary
+
+
+def calculate_health_score(df):
+
+    avg_delay = df["delay"].mean()
+
+    score = max(0, 100 - (avg_delay * 15))
+
+    return round(score, 2)
