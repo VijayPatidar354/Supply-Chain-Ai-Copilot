@@ -1,8 +1,6 @@
 📦 Supply Chain AI Copilot
 
-An AI-powered analytics dashboard that helps analyze supply chain order data and answer operational questions using natural language.
-
-The system combines data analytics, interactive visualizations, and a Large Language Model (LLM) to help supply chain managers quickly understand logistics performance.
+The Supply Chain AI Copilot system is designed as a data-driven analytics dashboard combined with an AI assistant that helps users analyze logistics performance and answer supply chain–related questions. The system processes uploaded order datasets, performs analytics using Python, visualizes operational metrics, and integrates a Large Language Model (LLM) for natural language interaction.
 
 Features
 1. Interactive Dashboard
@@ -58,7 +56,25 @@ Analytics & Metrics
             ▼
       Natural Language Answers
 
-7. Tech Stack Used
+7. Work Flow 
+
+User uploads dataset
+        ↓
+Data processing module calculates metrics
+        ↓
+Dashboard visualizes supply chain performance
+        ↓
+Summary insights generated
+        ↓
+User asks question to AI Copilot
+        ↓
+Prompt sent to LLM via Groq API
+        ↓
+AI generates response
+        ↓
+Answer displayed in dashboard
+
+8. Tech Stack Used
 
 Python
 Streamlit – dashboard framework
