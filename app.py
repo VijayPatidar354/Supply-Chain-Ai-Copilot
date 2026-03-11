@@ -69,12 +69,15 @@ if uploaded_file:
     worst_warehouse = filtered_df.groupby("warehouse")["delay"].mean().idxmax()
     fastest_product = filtered_df.groupby("product")["delay"].mean().idxmin()
 
-    col1, col2, col3, col4 = st.columns(4)
+    col1, col2, col3, col4, col5 = st.columns(5)
+
+    avg_processing = filtered_df["processing_time"].mean()
 
     col1.metric("Total Orders", total_orders)
     col2.metric("Average Delay", f"{avg_delay:.2f} days")
     col3.metric("Worst Warehouse", worst_warehouse)
     col4.metric("Fastest Product", fastest_product)
+    col5.metric("Avg Processing Time", f"{avg_processing:.2f} days")
 
     st.divider()
 
